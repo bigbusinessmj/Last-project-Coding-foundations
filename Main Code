@@ -32,6 +32,8 @@ player.sety(0)
 screen.tracer(0) #updates more frequently
 player.setheading(90) #starts facing upward
 
+##########################################################
+
 playerspeed=5 #defining how far the player will move on each keypress
 
 #each of the following functions corresponds to a keypress
@@ -61,6 +63,31 @@ turtle.onkey(moveleft,"a")
 turtle.onkey(moveup,"w")
 turtle.onkey(movedown,"s")
 
+##########################################################
+
+projectilespeed=10 #setting bullet speed
+bulletlist=[] #making a list to move multiple objects at once
+
+def genbullet(): #function for projectile generation
+    bulletlist.append(Turtle()) #adds each new item as a turtle to the list
+    bulletlist[len(bulletlist)-1].penup() #no trail
+    bulletlist[len(bulletlist)-1].shape("circle") #matches color of the player
+    bulletlist[len(bulletlist)-1].color("white")
+    bulletlist[len(bulletlist)-1].shapesize(0.5,0.5,0.5) #smaller size
+    bulletheading=player.heading() #matches position and heading to the player
+    bulletx=player.xcor()
+    bullety=player.ycor()
+    bulletlist[len(bulletlist)-1].setx(bulletx) #moves to match direction player is facing, twice as fast
+    bulletlist[len(bulletlist)-1].sety(bullety)
+    bulletlist[len(bulletlist)-1].setheading(bulletheading)
+
+#mapped to space
+turtle.onkey(genbullet,"space")
+
+##########################################################
+
 while True: #goes forever
     turtle.listen() #waits for keypresses
     screen.update() #updates the screen every loop
+    for bullet in range(0,len(bulletlist)): #moves every projectile every loop
+        bulletlist[bullet].forward(projectilespeed)
