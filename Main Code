@@ -17,7 +17,7 @@ TOP_EDGE= 400
 screen=Screen()
 screen.title=("game window")
 screen.bgcolor("black")
-turtle.screensize(canvwidth=399,canvheight=399,bg=None)
+turtle.screensize(canvwidth=395,canvheight=395,bg=None) #slightly smaller than the borders so enemies can spawn offscreen
 
 #setting up the initial player character
 player=Turtle()
@@ -31,3 +31,36 @@ player.sety(0)
 
 screen.tracer(0) #updates more frequently
 player.setheading(90) #starts facing upward
+
+playerspeed=5 #defining how far the player will move on each keypress
+
+#each of the following functions corresponds to a keypress
+def moveright():
+    currx=player.xcor() #takes the current position
+    player.setx(currx+playerspeed) #moves it a certain amount of units in the chosen direction
+    player.setheading(0) #makes the charater face the direction of the keypress
+
+def moveleft():
+    currx=player.xcor()
+    player.setx(currx-playerspeed)
+    player.setheading(180)
+
+def moveup():
+    curry=player.ycor()
+    player.sety(curry+playerspeed)
+    player.setheading(90)
+
+def movedown():
+    curry=player.ycor()
+    player.sety(curry-playerspeed)
+    player.setheading(270)
+
+#defining the onkey presses
+turtle.onkey(moveright,"d")
+turtle.onkey(moveleft,"a")
+turtle.onkey(moveup,"w")
+turtle.onkey(movedown,"s")
+
+while True: #goes forever
+    turtle.listen() #waits for keypresses
+    screen.update() #updates the screen every loop
