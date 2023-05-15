@@ -1,0 +1,33 @@
+
+
+
+#libraries
+import turtle
+import random
+import time
+from turtle import *
+
+#borders for later use
+RIGHT_EDGE= 400
+LEFT_EDGE= -400
+BOTTOM_EDGE= -400
+TOP_EDGE= 400
+
+#setting screensize and color
+screen=Screen()
+screen.title=("game window")
+screen.bgcolor("black")
+turtle.screensize(canvwidth=399,canvheight=399,bg=None)
+
+#setting up the initial player character
+player=Turtle()
+player.clear()
+player.penup()
+player.shape("arrow") #arrow will easily show direction facing
+player.color("white") #easy to see against a black background
+player.shapesize(1,2,1) #sets the size of the player
+player.setx(0) #starts in the middle
+player.sety(0)
+
+screen.tracer(0) #updates more frequently
+player.setheading(90) #starts facing upward
