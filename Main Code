@@ -88,9 +88,8 @@ turtle.onkey(genbullet,"space")
 ##########################################################
 
 enemyspeed=7
+numenemies=4
 enemylist=[]
-for enemy in range (0,10): #the number of enemies can be easily changed
-    enemylist.append(Turtle())
 def randy(): #these generate random numbers for spawn coordinates
     randy=random.randint(0,300)
     return(randy)
@@ -100,12 +99,13 @@ def randx():
 yspawn=300
 xspawn=300
 def genenemy(): #generates a set number of enemies based on how many are in the previous loop
-    for enemy in range(0,len(enemylist)):
+    for enemy in range (0,numenemies): #the number of enemies can be easily changed
+        enemylist.append(Turtle())
+    for enemy in range (0,len(enemylist)):
         enemyx=player.xcor()
         enemyy=player.ycor()
         randyspawn=randy()
         randxspawn=randx()
-        enemylist.append(Turtle()) #adds each new item as a turtle to the list
         enemylist[enemy].penup() #no trail
         enemylist[enemy].shape("square") #different shape and color than player
         enemylist[enemy].color("red")
@@ -123,19 +123,25 @@ while True: #goes forever
     for bullet in range(0,len(bulletlist)): #moves every projectile every loop
         bulletlist[bullet].forward(projectilespeed)
     for enemy in range(0,len(enemylist)):
+        if abs(enemylist[enemy-1].xcor()-player.xcor())<=5 and abs(enemylist[enemy-1].ycor()-player.ycor())<=5:
+            player.hideturtle()
+            del player
+            continue
+        else:
+            pass
         currx=enemylist[enemy-1].xcor() #this whole next section just gets the heading in degrees for the enemies to accurately track the player
         curry=enemylist[enemy-1].ycor()
         enemyx=player.xcor()
+        enemyy=player.ycor()
         if enemyx==0:
             enemyx=enemyx+0.5 #cant divide by zero, so this prevents it from being so
         else:
             pass
-        enemyy=player.ycor()
         if enemyy==0:
             enemyy=enemyy+1
         else:
             pass
-        yval=enemyy-curry #finding slop
+        yval=enemyy-curry #finding slope
         xval=enemyx-currx
         slope=yval/xval
         conversion=180/3.141592 #need heading in degrees just to keep everything neat
@@ -153,3 +159,4 @@ while True: #goes forever
                 continue
             else:
                 continue
+
