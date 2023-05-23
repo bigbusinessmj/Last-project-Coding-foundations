@@ -35,7 +35,7 @@ player.sety(0)
 player.setheading(90) #starts facing upward
 
 ##########################################################
-
+rounds = 1
 playerspeed=10 #defining how far the player will move on each keypress
 
 #each of the following functions corresponds to a keypress
