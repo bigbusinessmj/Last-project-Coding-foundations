@@ -163,12 +163,18 @@ while True: #goes forever
             else:
                 continue
         if bool(enemylist)==False: #checks if the list of enemies is empty
-            numenemies=numenemies+1
-            enemyspeed=enemyspeed+0.2
-            print("round") #indicator of new round for testing
-            genenemy(numenemies) #makes a new enemy or enemies
+            for x in range(0,3):
+                print()
+                print("Loading next round",end="")
+                for y in range(0,3):
+                    print(".",end="")
+                    time.sleep(.5)
+            rounds += 1
+            print()
+            print("Round",rounds, "begin") #indicator of new round for testing
+            genenemy() #makes a new enemy or enemies
             screen.update() #updates the screen
-            time.sleep(3) #3 seconds in between rounds
+            #3 seconds in between rounds
             break
         else:
             continue
