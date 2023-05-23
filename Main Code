@@ -165,7 +165,7 @@ while True: #goes forever
             print("round") #indicator of new round for testing
             genenemy() #makes a new enemy or enemies
             screen.update() #updates the screen
-            time.sleep(3) #3 minutes in between rounds
+            time.sleep(3) #3 seconds in between rounds
             break
         else:
             continue
