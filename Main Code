@@ -19,7 +19,9 @@ screen=Screen()
 screen.title=("game window")
 screen.bgcolor("black")
 turtle.screensize(canvwidth=395,canvheight=395,bg=None) #slightly smaller than the borders so enemies can spawn offscreen
+screen.tracer(0) #updates more frequently
 
+    
 #setting up the initial player character
 player=Turtle()
 player.clear()
@@ -30,12 +32,11 @@ player.shapesize(1,2,1) #sets the size of the player
 player.setx(0) #starts in the middle
 player.sety(0)
 
-screen.tracer(0) #updates more frequently
 player.setheading(90) #starts facing upward
 
 ##########################################################
 
-playerspeed=5 #defining how far the player will move on each keypress
+playerspeed=10 #defining how far the player will move on each keypress
 
 #each of the following functions corresponds to a keypress
 def moveright():
@@ -87,8 +88,8 @@ turtle.onkey(genbullet,"space")
 
 ##########################################################
 
-enemyspeed=7
-numenemies=4
+enemyspeed=0.1
+numenemies=1
 enemylist=[]
 def randy(): #these generate random numbers for spawn coordinates
     randy=random.randint(0,300)
@@ -114,6 +115,7 @@ def genenemy(): #generates a set number of enemies based on how many are in the 
         enemylist[enemy].sety(randxspawn)
 
 ##########################################################
+
 genenemy()
 a=0
 while True: #goes forever
@@ -123,7 +125,7 @@ while True: #goes forever
     for bullet in range(0,len(bulletlist)): #moves every projectile every loop
         bulletlist[bullet].forward(projectilespeed)
     for enemy in range(0,len(enemylist)):
-        if abs(enemylist[enemy-1].xcor()-player.xcor())<=5 and abs(enemylist[enemy-1].ycor()-player.ycor())<=5:
+        if abs(enemylist[enemy-1].xcor()-player.xcor())<=15 and abs(enemylist[enemy-1].ycor()-player.ycor())<=15:
             player.hideturtle()
             del player
             continue
@@ -147,7 +149,7 @@ while True: #goes forever
         conversion=180/3.141592 #need heading in degrees just to keep everything neat
         enemyheading=math.tan(slope)*conversion+180 #taking the tangent, converting it, and changing it to the opposite direction
         enemylist[enemy-1].setheading(enemyheading) #sets the heading for all the enemies
-        enemylist[enemy-1].forward(0.5) #slow for testing
+        enemylist[enemy-1].forward(enemyspeed) #slow for testing
         for bullet in range(0,len(bulletlist)):
             if abs(bulletlist[bullet-1].xcor()-currx)<=10 and abs(bulletlist[bullet-1].ycor()-curry)<=10:
                 currx=enemylist[enemy-1].xcor()
@@ -159,4 +161,12 @@ while True: #goes forever
                 continue
             else:
                 continue
+        if bool(enemylist)==False: #checks if the list of enemies is empty
+            print("round") #indicator of new round for testing
+            genenemy() #makes a new enemy or enemies
+            screen.update() #updates the screen
+            time.sleep(3) #3 minutes in between rounds
+            break
+        else:
+            continue
 
