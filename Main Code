@@ -88,6 +88,7 @@ turtle.onkey(genbullet,"space")
 
 ##########################################################
 
+global enemyspeed
 enemyspeed=0.1
 numenemies=1
 enemylist=[]
@@ -99,7 +100,7 @@ def randx():
     return(randx)
 yspawn=300
 xspawn=300
-def genenemy(): #generates a set number of enemies based on how many are in the previous loop
+def genenemy(numenemies): #generates a set number of enemies based on how many are in the previous loop
     for enemy in range (0,numenemies): #the number of enemies can be easily changed
         enemylist.append(Turtle())
     for enemy in range (0,len(enemylist)):
@@ -116,7 +117,7 @@ def genenemy(): #generates a set number of enemies based on how many are in the 
 
 ##########################################################
 
-genenemy()
+genenemy(numenemies)
 a=0
 while True: #goes forever
     a=a+1
@@ -162,8 +163,10 @@ while True: #goes forever
             else:
                 continue
         if bool(enemylist)==False: #checks if the list of enemies is empty
+            numenemies=numenemies+1
+            enemyspeed=enemyspeed+0.2
             print("round") #indicator of new round for testing
-            genenemy() #makes a new enemy or enemies
+            genenemy(numenemies) #makes a new enemy or enemies
             screen.update() #updates the screen
             time.sleep(3) #3 minutes in between rounds
             break
