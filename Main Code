@@ -1,6 +1,3 @@
-
-
-
 #libraries
 import turtle
 import random
@@ -34,6 +31,9 @@ player.sety(0)
 
 player.setheading(90) #starts facing upward
 
+dude = Turtle()
+
+playerlives = [3]
 ##########################################################
 rounds = 1
 playerspeed=10 #defining how far the player will move on each keypress
@@ -66,6 +66,34 @@ turtle.onkey(moveup,"w")
 turtle.onkey(movedown,"s")
 
 ##########################################################
+def gameover():
+    global dude
+    if (playerlives[0]) == 0:
+        turtle.clearscreen()
+        screen.bgcolor("black")
+        dude.penup()
+        dude.shapesize(20,20,20)
+        dude.goto (0,0)
+        dude.pendown ()
+        dude.penup ()
+        dude.hideturtle ()
+        dude = turtle.Turtle ()
+        dude.penup ()
+        dude.pendown()
+        dude.color("red")
+        style = ('Verdana', 100, 'italic')
+        dude.write ('Game over' , font = style, align = 'center')
+        dude.hideturtle ()
+        time.sleep(5)
+        exit()
+        
+##########################################################
+##global score
+##score = 0
+##def scoreboard():
+##    if abs(bulletlist[bullet-1].xcor()-currx)<=10 and abs(bulletlist[bullet-1].ycor()-curry)<=10:
+##        score += 100
+    
 
 projectilespeed=8 #setting bullet speed
 bulletlist=[] #making a list to move multiple objects at once
@@ -89,7 +117,8 @@ turtle.onkey(genbullet,"space")
 ##########################################################
 
 global enemyspeed
-enemyspeed=0.1
+enemyspeed = .5
+global numenemies
 numenemies=1
 enemylist=[]
 def randy(): #these generate random numbers for spawn coordinates
@@ -127,9 +156,13 @@ while True: #goes forever
         bulletlist[bullet].forward(projectilespeed)
     for enemy in range(0,len(enemylist)):
         if abs(enemylist[enemy-1].xcor()-player.xcor())<=15 and abs(enemylist[enemy-1].ycor()-player.ycor())<=15:
-            player.hideturtle()
-            del player
-            continue
+            playerlist[0] = playerlist[0]-1
+            player.sety(0)
+            player.setx(0)
+            gameover()
+##            player.hideturtle()
+##            playerlist.clear()
+##            break
         else:
             pass
         currx=enemylist[enemy-1].xcor() #this whole next section just gets the heading in degrees for the enemies to accurately track the player
@@ -163,6 +196,7 @@ while True: #goes forever
             else:
                 continue
         if bool(enemylist)==False: #checks if the list of enemies is empty
+            screen.update() #updates the screen
             for x in range(0,3):
                 print()
                 print("Loading next round",end="")
@@ -172,10 +206,11 @@ while True: #goes forever
             rounds += 1
             print()
             print("Round",rounds, "begin") #indicator of new round for testing
-            genenemy() #makes a new enemy or enemies
-            screen.update() #updates the screen
+            numenemies=numenemies+1
+            enemyspeed=enemyspeed+0.1
+            genenemy(numenemies) #makes a new enemy or enemies
             #3 seconds in between rounds
             break
         else:
             continue
-
+gameover()
