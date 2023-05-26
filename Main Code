@@ -34,6 +34,9 @@ player.setheading(90) #starts facing upward
 dude = Turtle()
 
 playerlives = [3]
+
+global score
+score=0
 ##########################################################
 rounds = 1
 playerspeed=10 #defining how far the player will move on each keypress
@@ -86,6 +89,41 @@ def gameover():
         dude.hideturtle ()
         time.sleep(5)
         exit()
+##########################################################
+        
+scoreboard2=[Turtle()]
+def updatescoreboard():
+    scoreboard2[0].clear()
+    global score
+    scoreboard=Turtle()
+    scoreboard.penup()
+    scoreboard.hideturtle()
+    scoreboard.color("white")
+    style=('Verdana',20,'italic')
+    scoreboard.goto(-320,300)
+    scoreboard.write("Score: ", font=style,align='left')
+    scoreboard2[0].penup()
+    scoreboard2[0].hideturtle()
+    scoreboard2[0].color("white")
+    scoreboard2[0].goto(-250,300)
+    scoreboard2[0].write(score, font=style,align='left')
+
+##########################################################
+
+global xcor
+xcor=-340
+lifeturtles=[]
+def showlives():
+    global xcor
+    for life in range(0,3):
+        lifeturtles.append(Turtle())
+        lifeturtles[life].penup()
+        xcor=xcor+30
+        lifeturtles[life].goto(xcor,290)
+        lifeturtles[life].color("red")
+        lifeturtles[life].shapesize(0.5,0.5,0.5)
+        lifeturtles[life].shape("triangle")
+        
         
 ##########################################################
 ##global score
@@ -148,6 +186,9 @@ def genenemy(numenemies): #generates a set number of enemies based on how many a
 
 genenemy(numenemies)
 a=0
+showlives()
+global currlife
+currlife=2
 while True: #goes forever
     a=a+1
     turtle.listen() #waits for keypresses
@@ -156,7 +197,9 @@ while True: #goes forever
         bulletlist[bullet].forward(projectilespeed)
     for enemy in range(0,len(enemylist)):
         if abs(enemylist[enemy-1].xcor()-player.xcor())<=15 and abs(enemylist[enemy-1].ycor()-player.ycor())<=15:
-            playerlist[0] = playerlist[0]-1
+            playerlives[0] = playerlives[0]-1
+            lifeturtles[currlife].hideturtle()
+            currlife=currlife-1
             player.sety(0)
             player.setx(0)
             gameover()
@@ -192,6 +235,9 @@ while True: #goes forever
                 enemylist[enemy-1].hideturtle()
                 del bulletlist[bullet-1]
                 del enemylist[enemy-1]
+                score=score+100
+                updatescoreboard()
+                print(score)
                 continue
             else:
                 continue
