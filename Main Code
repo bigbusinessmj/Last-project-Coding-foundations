@@ -68,11 +68,21 @@ def movedown():
     player.sety(curry-playerspeed)
     player.setheading(270)
 
+teleportlist=[0,0,0] #number of teleports the player starts with
+def teleport():
+    if len(teleportlist)>=1:
+        player.sety(random.randint(-250,250))
+        player.setx(random.randint(-250,250))
+        teleportlist.pop(len(teleportlist)-1)
+    else:
+        pass
+
 #defining the onkey presses
 turtle.onkey(moveright,"d")
 turtle.onkey(moveleft,"a")
 turtle.onkey(moveup,"w")
 turtle.onkey(movedown,"s")
+turtle.onkey(teleport,"t")
 
 ##########################################################
 def gameover():
@@ -261,6 +271,7 @@ while True: #goes forever
                 continue
         if bool(enemylist)==False: #checks if the list of enemies is empty
             screen.update() #updates the screen
+            teleportlist.append("0")
             for x in range(0,3):
                 print()
                 print("Loading next round",end="")
