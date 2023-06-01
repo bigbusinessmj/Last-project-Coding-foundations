@@ -37,12 +37,15 @@ player.sety(0)
 
 player.setheading(90) #starts facing upward
 
-dude = Turtle()
+writer = Turtle()
 
 playerlives = [3]
 
 global score
 score=0
+
+
+
 ##########################################################
 rounds = 1
 playerspeed=10 #defining how far the player will move on each keypress
@@ -86,26 +89,26 @@ turtle.onkey(teleport,"t")
 
 ##########################################################
 def gameover():
-    global dude
+    global writer
     if (playerlives[0]) == 0:
         turtle.clearscreen()
         screen.bgcolor("black")
-        dude.penup()
-        dude.shapesize(20,20,20)
-        dude.goto (0,0)
-        dude.pendown ()
-        dude.penup ()
-        dude.hideturtle ()
-        dude = turtle.Turtle ()
-        dude.penup ()
-        dude.color("red")
+        writer.penup()
+        writer.shapesize(20,20,20)
+        writer.goto (0,0)
+        writer.pendown ()
+        writer.penup ()
+        writer.hideturtle ()
+        writer = turtle.Turtle ()
+        writer.penup ()
+        writer.color("red")
         style = ('Verdana', 100, 'italic')
-        dude.write ('Game over' , font = style, align = 'center')
+        writer.write ('Game over' , font = style, align = 'center')
         style = ('Creepster', 80, 'italic')
-        dude.color("purple")
-        dude.goto (0,-100)
-        dude.write ('Final score: '+ str(score), font = style, align = 'center')
-        dude.hideturtle()
+        writer.color("purple")
+        writer.goto (0,-100)
+        writer.write ('Final score: '+ str(score), font = style, align = 'center')
+        writer.hideturtle ()
         time.sleep(5)
         exit()
 ##########################################################
