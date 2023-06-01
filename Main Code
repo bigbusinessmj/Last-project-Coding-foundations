@@ -11,21 +11,27 @@ LEFT_EDGE= -400
 BOTTOM_EDGE= -400
 TOP_EDGE= 400
 
+rickgrimes="THERickGrimessmaller.gif"
+kimjongun="kimjongun.gif"
+
 #setting screensize and color
 screen=Screen()
 screen.title=("game window")
 screen.bgcolor("black")
 turtle.screensize(canvwidth=395,canvheight=395,bg=None) #slightly smaller than the borders so enemies can spawn offscreen
 screen.tracer(0) #updates more frequently
+screen.addshape(rickgrimes)
+screen.addshape(kimjongun)
 
     
 #setting up the initial player character
 player=Turtle()
 player.clear()
 player.penup()
-player.shape("arrow") #arrow will easily show direction facing
-player.color("white") #easy to see against a black background
-player.shapesize(1,2,1) #sets the size of the player
+player.shape(rickgrimes) #arrow will easily show direction facing
+#player.color("white") #easy to see against a black background
+#player.shapesize(0.1,0.1,0.1) #sets the size of the player
+
 player.setx(0) #starts in the middle
 player.sety(0)
 
@@ -184,9 +190,9 @@ def genenemy(numenemies): #generates a set number of enemies based on how many a
         randyspawn=randy()
         randxspawn=randx()
         enemylist[enemy].penup() #no trail
-        enemylist[enemy].shape("square") #different shape and color than player
-        enemylist[enemy].color("red")
-        enemylist[enemy].shapesize(1,1,1) #smaller size
+        enemylist[enemy].shape(kimjongun) #different shape and color than player
+        #enemylist[enemy].color("red")
+        #enemylist[enemy].shapesize(1,1,1) #smaller size
         enemylist[enemy].setx(randyspawn) #random spawn(s)
         enemylist[enemy].sety(randxspawn)
 
@@ -230,6 +236,10 @@ while True: #goes forever
             pass
         yval=enemyy-curry #finding slope
         xval=enemyx-currx
+        if xval==0:
+            xval=xval+0.01
+        else:
+            pass
         slope=yval/xval
         conversion=180/3.141592 #need heading in degrees just to keep everything neat
         enemyheading=math.tan(slope)*conversion+180 #taking the tangent, converting it, and changing it to the opposite direction
@@ -261,7 +271,7 @@ while True: #goes forever
             print()
             print("Round",rounds, "begin") #indicator of new round for testing
             numenemies=numenemies+1
-            enemyspeed=enemyspeed+0.1
+            enemyspeed=enemyspeed+0.2
             genenemy(numenemies) #makes a new enemy or enemies
             #3 seconds in between rounds
             break
