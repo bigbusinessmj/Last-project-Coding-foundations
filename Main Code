@@ -160,10 +160,18 @@ global numenemies
 numenemies=1
 enemylist=[]
 def randy(): #these generate random numbers for spawn coordinates
-    randy=random.randint(0,300)
+    randy=random.randint(-300,300) #cannot spawn within 100 units of the player
+    if randy>=-100 and randy<=100:
+        randy=randy+100
+    else:
+        pass
     return(randy)
 def randx():
-    randx=random.randint(0,300)
+    randx=random.randint(-300,300)
+    if randx>=-100 and randx<=100:
+        randx=randx+100
+    else:
+        pass
     return(randx)
 yspawn=300
 xspawn=300
@@ -259,4 +267,25 @@ while True: #goes forever
             break
         else:
             continue
+    if player.xcor()<=LEFT_EDGE: #if the player hits any of the borders they go to the opposite side
+        player.setx(380)
+    if player.xcor()>=RIGHT_EDGE:
+        player.setx(-380)
+    if player.ycor()>=TOP_EDGE:
+        player.sety(-380)
+    if player.ycor()<=BOTTOM_EDGE:
+        player.sety(380)
+    else:
+        pass
+    for enemy in range(0,len(enemylist)): #if any of the enemies hits any of the borders they go to the opposite side
+        if enemylist[enemy].xcor()<=LEFT_EDGE:
+            enemylist[enemy].setx(380)
+        if enemylist[enemy].xcor()>=RIGHT_EDGE:
+            enemylist[enemy].setx(-380)
+        if enemylist[enemy].ycor()>=TOP_EDGE:
+            enemylist[enemy].sety(-380)
+        if enemylist[enemy].ycor()<=BOTTOM_EDGE:
+            enemylist[enemy].sety(380)
+        else:
+            pass
 gameover()
